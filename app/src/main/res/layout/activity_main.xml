@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDE7F6">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!--    Motion status (accelerometer)-->
+        <TextView
+            android:id="@+id/tvMotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Motion: Stationary"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp" />
+
+        <!--    gyroscope rotation angles    -->
+        <TextView
+            android:id="@+id/tvGyro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rotation (Pitch, Roll, Yaw): 0.00, 0.00, 0.00"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Magnetometer compass direction -->
+        <TextView
+            android:id="@+id/tvDirection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Direction"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Accuracy warning, hidden until onAccuracyChanged fires -->
+        <TextView
+            android:id="@+id/tvAccuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Calibration trigger -->
+        <Button
+            android:id="@+id/btnCalibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calibrate"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- MPAndroidChart BarChart -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_margin="16dp" />
+    
+        <!-- re-run setupChart() with updated data -->
+        <Button
+            android:id="@+id/btnRefreshChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Refresh Chart"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

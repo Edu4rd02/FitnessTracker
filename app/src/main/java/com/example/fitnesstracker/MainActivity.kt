@@ -1,7 +1,6 @@
 package com.example.fitnesstracker
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -9,15 +8,12 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.rotationMatrix
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import kotlin.math.sqrt
-import com.github.mikephil.charting.components.XAxis
 
 @SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity(), SensorEventListener {
@@ -95,7 +91,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
     }
 
-    // Assignment 1: add the 3 sensor cases
     override fun onSensorChanged(event: SensorEvent) {
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> {
@@ -127,8 +122,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    // Assignment: implement classifyMotion
-    // Return "Stationary", "Walking", or "Jogging" based on magnitude (m/s^2)
     private fun classifyMotion(magnitude: Float): String {
         return when {
             magnitude < STATIONARY_THRESHOLD -> "Stationary"
@@ -137,9 +130,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    // Assignment: Implement handleGyroscope
-    // values[0]=pitch, values[1]=roll, values[2]=yaw
-    // tvGyro.text = "Rotation (pitch, roll, yaw): %.2f
     private fun handleGyroscope(values: FloatArray){
         val pitch = values[0]
         val roll = values[1]
@@ -147,8 +137,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         tvGyro.text = "Rotation (Pitch: ${"%.2f".format(pitch)}, Roll: ${"%.2f".format(roll)}, ${"%.2f".format(yaw)})"
     }
 
-    // Assignment
-    // Hint: SensorManager.getRotationMatrix(rotationMatrix, inclinationMatrix, accelValues, magnetValues)
     private fun updateCompass(){
         val rotationMatrix = FloatArray(9)
         val inclinationMatrix = FloatArray(9)
@@ -172,15 +160,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         tvDirection.text = "Direction: $azimuthDeg ($direction)"
     }
 
-    // Assignment 2
-    // Hint: val entries = hourlySteps.mapIndexed { i , v -> barEntry(i.toFloat() v)}
-    // Color = 0xFF80DEEA.toInt(), dataset label = "steps", Description = "Step count per hour"
     private fun setupChart(){
         val entries = hourlySteps.mapIndexed { index, value ->
             BarEntry(index.toFloat(), value)
         }
-        val dataSet = BarDataSet(entries, "Steps")
+        val dataSet = BarDataSet(entries, "Steps").apply {
+            color = 0xFF80DEEA.toInt()
+        }
         barChart.data = BarData(dataSet)
+        barChart.description.text ="Step count per hour"
         barChart.invalidate()
     }
 
